@@ -34,7 +34,8 @@ public class Claw {
         
         // Initialize NEO 550 motors
         motorLeft = new CANSparkMax(2, MotorType.kBrushless); // NOT ACCURATE
-        motorRight = new CANSparkMax(3, MotorType.kBrushless); // NOT ACCURATE
+        motorLeft.follow(motorRight);
+        motorRight.setInverted(true);
 
         // Initialize state
         state = ClawStates.IDLE;
