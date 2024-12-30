@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
-// I WILL REPLACE MAGIC NUMBERS WITH CONSTANTS FILE LATER
 // Pneumatics HUB and Controller stuff??
 
 enum ClawStates {
@@ -29,13 +27,12 @@ public class Claw {
     
     public Claw() {
         // Initialize solenoids
-        solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, 0); // NOT ACCURATE
-        solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, 1); // NOT ACCURATE
+        solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Claw.LEFT_PNEUMATICS_ID); // NOT ACCURATE
+        solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Claw.RIGHT_PNEUMATICS_ID); // NOT ACCURATE
         
         // Initialize NEO 550 motors
-        motorLeft = new CANSparkMax(2, MotorType.kBrushless); // NOT ACCURATE
-        motorLeft.follow(motorRight);
-        motorRight.setInverted(true);
+        motorLeft = new CANSparkMax(Constants.Claw.LEFT_MOTOR_ID, MotorType.kBrushless); // NOT ACCURATE
+        motorRight = new CANSparkMax(Constants.Claw.RIGHT_MOTOR_ID, MotorType.kBrushless); // NOT ACCURATE
 
         // Initialize state
         state = ClawStates.IDLE;
@@ -48,29 +45,29 @@ public class Claw {
                 solenoidLeft.set(false); // IDK how these work?????
                 solenoidRight.set(false); // claw open
 
-                motorRight.set(0);
-                motorLeft.set(0);
+                motorRight.set(Constants.Claw.IDLE_SPEED);
+                motorLeft.set(Constants.Claw.IDLE_SPEED);
             break;
             case OUTPUTING:
                 solenoidLeft.set(false); // claw open
                 solenoidRight.set(false);
                 
-                motorRight.set(0.5);
-                motorLeft.set(0.5);
+                motorRight.set(Constants.Claw.OUTPUTTING_SPEED);
+                motorLeft.set(Constants.Claw.OUTPUTTING_SPEED);
             break;
             case INTAKING:
                 solenoidLeft.set(false); // claw open
                 solenoidRight.set(false);
 
-                motorRight.set(-0.5);
-                motorLeft.set(-0.5);
+                motorRight.set(Constants.Claw.INTAKING_SPEED);
+                motorLeft.set(Constants.Claw.INTAKING_SPEED);
             break;
             case HOLDING:
                 solenoidLeft.set(true);
                 solenoidRight.set(false);
 
-                motorRight.set(0);
-                motorLeft.set(0);
+                motorRight.set(Constants.Claw.HOLDING_SPEED);
+                motorLeft.set(Constants.Claw.HOLDING_SPEED);
         }
     }
 
