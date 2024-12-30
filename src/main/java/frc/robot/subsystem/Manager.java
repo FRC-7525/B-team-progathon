@@ -104,7 +104,51 @@ public class Manager {
     }
 
     private void setSubsystemStates() {
-        
+        switch (state) {
+            case IDLE:
+                /*
+                 * claw.setState(ClawStates.IDLE);
+                 * wrist.setState(WristStates.FLAT);
+                 * elevator.setTargetState(ElevatorStates.MIDDLE);
+                 */
+                break;
+            case SCORE_HIGH:
+                /*
+                * elevator.setTargetState(ElevatorStates.HIGH);
+                * wrist.setState(WristStates.HIGH);
+                * claw.setState(ClawStates.SCORING);
+                */
+                break;
+            case SCORE_MIDDLE:
+                /*
+                 * elevator.setTargetState(ElevatorStates.MIDDLE);
+                 * wrist.setState(WristStates.HIGH);
+                 * claw.setState(ClawStates.SCORING);
+                 */
+                break;
+            case INTAKE_LOW:
+                /*
+                 * elevator.setTargetState(ElevatorStates.LOW);
+                 * wrist.setState(WristStates.LOW);
+                 * claw.setState(ClawStates.INTAKE);
+                 */
+                break;
+            case OUTAKE:
+                /*
+                 * DO NOT SET ELEVATOR
+                 * wrist.setState(WristStates.FLAT);
+                 * claw.setState(ClawStates.OUTAKE);
+                 */
+                break;
+            case HOLDING:
+                /*
+                 * claw.setState(ClawStates.HOLDING);
+                 * wrist.setState(WristStates.FLAT);
+                 * 
+                 */
+            default:
+                break;
+        }
     }
 
 
