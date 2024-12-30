@@ -28,7 +28,8 @@ public class Constants {
         public static final IdleMode IDLE_MODE = IdleMode.kBrake; 
 
         //Target vs Current Relation  
-        public static final double TOLERANCE = Math.abs(0.1);  
+        public static final double TOLERANCE = 0.1;  
 
+        //TODO:Get numbers for conversions
     }
 }

@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 
-import static frc.robot.Constants.Elevator.IDLE_MODE;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -49,7 +47,7 @@ public class Elevator {
         encoder = rightMotor.getEncoder(); 
         encoder.setPositionConversionFactor(1); //Okay?
         leftMotor.follow(rightMotor); 
-        rightMotor.setIdleMode(IDLE_MODE); 
+        rightMotor.setIdleMode(Constants.Elevator.IDLE_MODE); 
 
         //Default to middle state
         targetState = ElevatorStates.MIDDLE;
@@ -70,7 +68,7 @@ public class Elevator {
     //Stops Motors (only need right because left follows)
     private void stopMotors() { 
         rightMotor.setVoltage(Constants.Elevator.IDLE_SPEED); 
-        rightMotor.setIdleMode(IDLE_MODE); 
+        rightMotor.setIdleMode(Constants.Elevator.IDLE_MODE); 
     }
 
     public void periodic () {
