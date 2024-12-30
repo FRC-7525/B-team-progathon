@@ -4,9 +4,7 @@ package frc.robot;
 
 public final class Constants {
     
-    private Constants() {
-
-    }
+    
 
     public static final class Wrist {
         public static final int CONVERSION_FACTOR = 360;
@@ -14,8 +12,8 @@ public final class Constants {
         public static final double HIGH = 225;
         public static final double FLAT = 180;
         public static final double LOW = 135;
-        public static final double WRIST_P = 2;
-        public static final double WRIST_I = 1;
-        public static final double WRIST_D = 1;
+        public static final double WRIST_P = 1;
+        public static final double WRIST_I = 0;
+        public static final double WRIST_D = 0;
     }
 }
