@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystem;
 
 import frc.robot.Constants;
 
@@ -9,18 +9,24 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 
 enum ElevatorStates {
-    HIGH(Constants.Elevator.HIGH_HEIGHT), 
-    MIDDLE(Constants.Elevator.MIDDLE_HEIGHT), 
-    LOW(Constants.Elevator.LOW_HEIGHT); 
+    HIGH(Constants.Elevator.HIGH_HEIGHT, !Constants.Elevator.HIGH_GEAR), 
+    MIDDLE(Constants.Elevator.MIDDLE_HEIGHT, Constants.Elevator.HIGH_GEAR), 
+    LOW(Constants.Elevator.LOW_HEIGHT, Constants.Elevator.HIGH_GEAR); 
 
     private double targetHeight; 
+    private boolean highGear; 
 
-    ElevatorStates(double targetHeight) {
+    ElevatorStates(double targetHeight, boolean highGear) {
         this.targetHeight = targetHeight; 
+        this.highGear = highGear; 
     }
 
     public double getTargetHeight() {
         return targetHeight; 
+    }
+
+    public boolean getHighGear() {
+        return highGear; 
     }
 }
 
@@ -45,7 +51,7 @@ public class Elevator {
 
         //Motor Logistics
         encoder = rightMotor.getEncoder(); 
-        encoder.setPositionConversionFactor(1); //Okay?
+        encoder.setPositionConversionFactor(1);
         leftMotor.follow(rightMotor); 
         rightMotor.setIdleMode(Constants.Elevator.IDLE_MODE); 
 
@@ -60,9 +66,12 @@ public class Elevator {
         controller.setGoal(targetState.getTargetHeight());
     }
 
-    //Gets the current height I think, possibly 
+    //Gets the current height/position 
     private double getCurrentHeight() {
-        return encoder.getPosition(); 
+        double elevatorPosition = encoder.getPosition(); 
+        Constants.Elevator.HIGH_GEAR = targetState.getHighGear();  
+        return ((elevatorPosition * Constants.Elevator.GEARING) * 
+            Constants.Elevator.SPOOL_CONVERSION) * Constants.Elevator.INCHES_TO_METERS;
     }
 
     //Stops Motors (only need right because left follows)
@@ -73,9 +82,8 @@ public class Elevator {
 
     public void periodic () {
         if (targetState != null){
-            double currentHeight = getCurrentHeight();  
+            double currentHeight = getCurrentHeight();   
             double targetHeight = targetState.getTargetHeight(); 
-            //Calculates change I think???
             double pidOutput = controller.calculate(currentHeight, targetHeight); 
 
             //Stops motors once it's close enough to tolerance 

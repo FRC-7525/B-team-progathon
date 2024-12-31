@@ -3,12 +3,12 @@ package frc.robot;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 public class Constants {
-    //TODO: Basically fix all these values bc I think they're all wrong/random :)
+    
     public static final class Elevator {
-        //Height for each level 
-        public static final double HIGH_HEIGHT = 3.0;  
-        public static final double MIDDLE_HEIGHT = 2.0; 
-        public static final double LOW_HEIGHT = 1.0; 
+        //Height for each level - meters
+        public static final double HIGH_HEIGHT = 2.286; //Max height is 96.5in so 90in for high ig
+        public static final double MIDDLE_HEIGHT = 1.397; // Middle point between high and low
+        public static final double LOW_HEIGHT = 0.508; //Min height is 12in so 20in for low ig
         
         //CAN IDs 
         public static final int LEFT_MOTOR_CANID = 5; 
@@ -30,6 +30,16 @@ public class Constants {
         //Target vs Current Relation  
         public static final double TOLERANCE = 0.1;  
 
-        //TODO:Get numbers for conversions
+        //Gears - inches
+        public static boolean HIGH_GEAR = false;
+        public static final double BASE_RATIO = (12/85);
+        public static final double LOW_RATIO = (50/34);
+        public static final double HIGH_RATIO = (24/60);
+        public static final double FINAL_RATIO = (24/74); 
+        public static final double GEARING = (BASE_RATIO/(HIGH_GEAR ? HIGH_RATIO :LOW_RATIO));
+
+        //Conversions
+        public static final double INCHES_TO_METERS = 0.0254;
+        public static final double SPOOL_CONVERSION = 2 *Math.PI;
     }
 }
