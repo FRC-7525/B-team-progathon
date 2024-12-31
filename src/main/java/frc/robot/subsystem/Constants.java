@@ -11,10 +11,8 @@ public class Constants {
         public static final int RIGHT_MOTOR_ID = 3;
 
         // Speeds are not in units, percentage of max power
-        public static final double IDLE_SPEED = 0;
         public static final double OUTPUTTING_SPEED = 0.5;
         public static final double INTAKING_SPEED = -0.5;
-        public static final double HOLDING_SPEED = 0;
 
     }
 }

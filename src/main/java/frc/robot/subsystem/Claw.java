@@ -33,7 +33,8 @@ public class Claw {
         // Initialize NEO 550 motors
         motorLeft = new CANSparkMax(Constants.Claw.LEFT_MOTOR_ID, MotorType.kBrushless); // NOT ACCURATE
         motorRight = new CANSparkMax(Constants.Claw.RIGHT_MOTOR_ID, MotorType.kBrushless); // NOT ACCURATE
-
+        motorRight.follow(motorLeft);
+        motorRight.setInverted(true);
         // Initialize state
         state = ClawStates.IDLE;
     }
@@ -45,29 +46,25 @@ public class Claw {
                 solenoidLeft.set(false); // IDK how these work?????
                 solenoidRight.set(false); // claw open
 
-                motorRight.set(Constants.Claw.IDLE_SPEED);
-                motorLeft.set(Constants.Claw.IDLE_SPEED);
+                motorLeft.set(0);
             break;
             case OUTPUTING:
                 solenoidLeft.set(false); // claw open
                 solenoidRight.set(false);
-                
-                motorRight.set(Constants.Claw.OUTPUTTING_SPEED);
+            
                 motorLeft.set(Constants.Claw.OUTPUTTING_SPEED);
             break;
             case INTAKING:
                 solenoidLeft.set(false); // claw open
                 solenoidRight.set(false);
 
-                motorRight.set(Constants.Claw.INTAKING_SPEED);
                 motorLeft.set(Constants.Claw.INTAKING_SPEED);
             break;
             case HOLDING:
-                solenoidLeft.set(true);
-                solenoidRight.set(false);
+                solenoidLeft.set(true); // claw closed
+                solenoidRight.set(true);
 
-                motorRight.set(Constants.Claw.HOLDING_SPEED);
-                motorLeft.set(Constants.Claw.HOLDING_SPEED);
+                motorLeft.set(0);
         }
     }
 
