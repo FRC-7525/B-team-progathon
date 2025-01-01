@@ -3,6 +3,7 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Current;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Velocity; 
@@ -38,6 +39,10 @@ public class Constants {
         //Spool
         public static final Measure<Distance> CIRCUMFERENCE_SPOOL =  Inches.of(2);
         public static final double SPOOL_CONVERSION = Units.inchesToMeters(CIRCUMFERENCE_SPOOL.magnitude() * Math.PI);
+
+        //Zeroing
+        public static final Measure<Velocity<Distance>> ZEROING_VELOCITY = MetersPerSecond.of(0.3); //random value idk
+        public static final Measure<Current> ZEROING_CURRENT_LIMIT = Amps.of(10); 
         
     }
 }

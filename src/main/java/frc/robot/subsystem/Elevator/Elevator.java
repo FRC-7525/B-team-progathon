@@ -14,9 +14,10 @@ public class Elevator {
     private CANSparkMax leftMotor; 
     private CANSparkMax rightMotor; 
 
-    private ProfiledPIDController controller; 
-    private ElevatorStates targetState;
+    private ProfiledPIDController controller;
     private RelativeEncoder encoder; 
+    private ElevatorStates targetState;
+    private boolean motorsZeroed; 
     
     public Elevator() {
 
@@ -32,10 +33,11 @@ public class Elevator {
 
         //Motor Logistics
         leftMotor.follow(rightMotor);
-        encoder = rightMotor.getEncoder();
+        encoder = rightMotor.getEncoder();   
         encoder.setPositionConversionFactor(1);  
         encoder.setPosition(0); 
-        rightMotor.setVoltage(0); 
+        rightMotor.setVoltage(0);
+        motorsZeroed = false; 
 
         //Default to low state
         targetState = ElevatorStates.LOW;
@@ -55,12 +57,25 @@ public class Elevator {
             Constants.Elevator.SPOOL_CONVERSION);
     }
 
+    public void zero() {
+        double rightZeroingSpeed = -Constants.Elevator.ZEROING_VELOCITY.magnitude();  
+        if (rightMotor.getOutputCurrent() > Constants.Elevator.ZEROING_CURRENT_LIMIT.magnitude()) {
+            rightZeroingSpeed = 0; 
+            if (!motorsZeroed){
+                encoder.setPosition(0); 
+                motorsZeroed = true; 
+            }
+        }
+        rightMotor.set(rightZeroingSpeed);
+    }
+
     public void periodic () {
         if (targetState != null){
             double currentHeight = getCurrentHeight();   
             double targetHeight = targetState.getTargetHeight(); 
             double pidOutput = controller.calculate(currentHeight, targetHeight); 
             rightMotor.setVoltage(pidOutput); ///I feel like this is wrong but ehhh
+            zero(); //I just need to call it, right? 
         }
     }
 }
