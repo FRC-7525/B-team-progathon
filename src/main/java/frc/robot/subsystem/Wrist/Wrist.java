@@ -1,21 +1,17 @@
-package frc.robot.subsystem;
+package frc.robot.subsystem.Wrist;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 
 
-public class Wrist {
 
-    enum WristStates {
-        HIGH,
-        LOW,
-        FLAT;
-    }
+public class Wrist {
 
     private CANSparkMax pivotMotor;
     private WristStates state;
@@ -35,20 +31,8 @@ public class Wrist {
     }
 
     public void periodic() {
-        switch (state) {
-            case HIGH:
-                pivotMotor.set(controller.calculate(pivotMotor.getEncoder().getPosition(), Constants.Wrist.HIGH)); //wrist high
-                break; 
-            
-            case LOW:
-                pivotMotor.set(controller.calculate(pivotMotor.getEncoder().getPosition(), Constants.Wrist.LOW)); //wrist low
-                break;
-    
-            case FLAT:
-                pivotMotor.set(controller.calculate(pivotMotor.getEncoder().getPosition(), Constants.Wrist.FLAT)); //wrist straight
-                break;
-        
-        }
+        SmartDashboard.putString("Wrist State", state.getStateString());
+        pivotMotor.set(controller.calculate(pivotMotor.getEncoder().getPosition(), state.getTargetAngle()));
     }
 
 }
