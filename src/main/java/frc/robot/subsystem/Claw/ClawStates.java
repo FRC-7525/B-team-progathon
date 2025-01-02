@@ -7,7 +7,7 @@ enum ClawStates {
     OUTPUTING("OUTPUTING", Claw.OUTPUTTING_SPEED, false),
     INTAKING("INTAKING", Claw.INTAKING_SPEED, false),
     HOLDING("HOLDING", 0, true);
-
+ 
     private String stateString;
     private double speed;
     private boolean clawClosed;
