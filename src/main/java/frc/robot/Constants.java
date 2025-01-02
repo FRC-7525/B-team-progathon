@@ -6,14 +6,15 @@ import edu.wpi.first.units.Current;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Velocity; 
+import edu.wpi.first.units.Angle;
 
 public class Constants {
     public static final class Wrist {
         public static final int CONVERSION_FACTOR = 360;
         public static final int PIVOT_MOTOR_ID = 1;
-        public static final double HIGH = 225;
-        public static final double FLAT = 180;
-        public static final double LOW = 135;
+        public static final Measure<Angle> HIGH = Degrees.of(225);
+        public static final  Measure<Angle> FLAT = Degrees.of(180);
+        public static final Measure<Angle> LOW = Degrees.of(175);
         public static final double WRIST_P = 1;
         public static final double WRIST_I = 0;
         public static final double WRIST_D = 0;
