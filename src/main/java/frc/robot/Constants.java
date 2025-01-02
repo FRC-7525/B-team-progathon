@@ -8,6 +8,16 @@ import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Velocity; 
 
 public class Constants {
+    public static final class Wrist {
+        public static final int CONVERSION_FACTOR = 360;
+        public static final int PIVOT_MOTOR_ID = 1;
+        public static final double HIGH = 225;
+        public static final double FLAT = 180;
+        public static final double LOW = 135;
+        public static final double WRIST_P = 1;
+        public static final double WRIST_I = 0;
+        public static final double WRIST_D = 0;
+      
     public static final class Elevator {
         //Height for each level - meters
         public static final Measure<Distance> HIGH_HEIGHT = Meters.of(2.286); //Max height is 96.5in so 90in for high ig
@@ -26,8 +36,7 @@ public class Constants {
         public static final Measure<Velocity<Velocity<Distance>>> MAX_ACCELERATION = MetersPerSecondPerSecond.of(0.5);
         public static final Measure<Distance> DISTANCE_TOLERANCE = Meters.of(0.05); 
         public static final Measure<Velocity<Distance>> VELOCITY_TOLERANCE = MetersPerSecond.of(0.05);   
-
-        //Height stuff
+      
         //Gear
         public static final double BASE_RATIO = (12/85);
         public static final double LOW_RATIO = (50/34);
@@ -40,7 +49,6 @@ public class Constants {
 
         //Zeroing
         public static final double ZEROING_SPEED = (0.3); //random value 
-        public static final Measure<Current> ZEROING_CURRENT_LIMIT = Amps.of(10); 
-        
+        public static final Measure<Current> ZEROING_CURRENT_LIMIT = Amps.of(10);
     }
 }
