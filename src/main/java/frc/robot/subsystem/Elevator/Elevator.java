@@ -8,6 +8,7 @@ import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator {
     
@@ -16,7 +17,7 @@ public class Elevator {
 
     private ProfiledPIDController controller;
     private RelativeEncoder encoder; 
-    private ElevatorStates targetState;
+    private ElevatorStates state;
     private boolean motorsZeroed; 
     
     public Elevator() {
@@ -36,18 +37,17 @@ public class Elevator {
         encoder = rightMotor.getEncoder();   
         encoder.setPositionConversionFactor(1);  
         encoder.setPosition(0); 
-        rightMotor.setVoltage(0);
         motorsZeroed = false; 
 
         //Default to low state
-        targetState = ElevatorStates.LOW;
+        state = ElevatorStates.LOW;
     }
 
     //Sets the target state based on enum 
     public void setState (ElevatorStates state) {
-        targetState = state; 
+        this.state = state; 
         //Reset controller each time target state changes 
-        controller.setGoal(targetState.getTargetHeight());
+        controller.setGoal(state.getTargetHeight());
     }
 
     //Gets the current height/position 
@@ -57,25 +57,30 @@ public class Elevator {
             Constants.Elevator.SPOOL_CONVERSION);
     }
 
+    //Checks if near setpoint using tolerance 
+    public boolean nearSetPoint () {
+        return controller.atSetpoint(); 
+    }
+
     public void zero() {
-        double rightZeroingSpeed = -Constants.Elevator.ZEROING_VELOCITY.magnitude();  
+        double zeroingSpeed = -Constants.Elevator.ZEROING_SPEED;  
         if (rightMotor.getOutputCurrent() > Constants.Elevator.ZEROING_CURRENT_LIMIT.magnitude()) {
-            rightZeroingSpeed = 0; 
+            zeroingSpeed = 0; 
             if (!motorsZeroed){
                 encoder.setPosition(0); 
                 motorsZeroed = true; 
             }
         }
-        rightMotor.set(rightZeroingSpeed);
+        rightMotor.set(zeroingSpeed);
     }
 
-    public void periodic () {
-        if (targetState != null){
-            double currentHeight = getCurrentHeight();   
-            double targetHeight = targetState.getTargetHeight(); 
-            double pidOutput = controller.calculate(currentHeight, targetHeight); 
-            rightMotor.setVoltage(pidOutput); ///I feel like this is wrong but ehhh
-            zero(); //I just need to call it, right? 
-        }
+    public void periodic () { 
+        SmartDashboard.putString("State String", state.getStateString());
+        double pidOutput = controller.calculate(getCurrentHeight(), state.getTargetHeight()); 
+        if (!motorsZeroed) {
+            zero(); 
+        } else {
+            rightMotor.setVoltage(pidOutput); 
+        } 
     }
 }
