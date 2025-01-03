@@ -1,17 +1,14 @@
-package frc.robot.subsystem;
+package frc.robot.subsystem.Claw;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystem.Constants;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 // Pneumatics HUB and Controller stuff??
 
-enum ClawStates {
-    IDLE,
-    OUTPUTING,
-    INTAKING,
-    HOLDING
-}
 
 public class Claw {
     // Solenoids for claw open and close
@@ -41,34 +38,19 @@ public class Claw {
 
     
     public void periodic() {
-        switch (state) {
-            case IDLE:
-                solenoidLeft.set(false); // IDK how these work?????
-                solenoidRight.set(false); // claw open
+        solenoidLeft.set(state.getClawClosed());
+        solenoidRight.set(state.getClawClosed());
 
-                motorLeft.set(0);
-            break;
-            case OUTPUTING:
-                solenoidLeft.set(false); // claw open
-                solenoidRight.set(false);
-            
-                motorLeft.set(Constants.Claw.OUTPUTTING_SPEED);
-            break;
-            case INTAKING:
-                solenoidLeft.set(false); // claw open
-                solenoidRight.set(false);
+        motorLeft.set(state.getMotorSpeed());
 
-                motorLeft.set(Constants.Claw.INTAKING_SPEED);
-            break;
-            case HOLDING:
-                solenoidLeft.set(true); // claw closed
-                solenoidRight.set(true);
-
-                motorLeft.set(0);
-        }
+        logState();
     }
 
     public void setState(ClawStates state) {
         this.state = state;
+    }
+
+    private void logState() {
+        SmartDashboard.putString("Claw State", state.getState());
     }
 }
