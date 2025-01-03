@@ -1,7 +1,6 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
-
 import edu.wpi.first.units.Current;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
@@ -51,5 +50,10 @@ public class Constants {
         //Zeroing
         public static final double ZEROING_SPEED = (0.3); //random value 
         public static final Measure<Current> ZEROING_CURRENT_LIMIT = Amps.of(10);
+
+    }
+    
+    public static final class Drive {
+        public static final double FEET_TO_METERS = 4.5;
     }
 }
