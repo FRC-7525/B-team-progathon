@@ -8,9 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
-
-
-
 public class Wrist {
 
     private CANSparkMax pivotMotor;
@@ -26,7 +23,7 @@ public class Wrist {
         state = WristStates.FLAT;
     }
 
-    public void setstate(WristStates state) {
+    public void setState(WristStates state) {
         this.state = state;
     }
 

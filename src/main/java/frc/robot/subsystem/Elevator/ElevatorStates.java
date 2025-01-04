@@ -2,7 +2,7 @@ package frc.robot.subsystem.Elevator;
 
 import frc.robot.Constants;
 
-enum ElevatorStates {
+public enum ElevatorStates {
     HIGH("HIGH", Constants.Elevator.HIGH_HEIGHT.magnitude()), 
     MIDDLE("MIDDLE", Constants.Elevator.MIDDLE_HEIGHT.magnitude()), 
     LOW("LOW", Constants.Elevator.LOW_HEIGHT.magnitude()); 

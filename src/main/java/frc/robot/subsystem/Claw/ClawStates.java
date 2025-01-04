@@ -1,8 +1,8 @@
 package frc.robot.subsystem.Claw;
 
-import frc.robot.subsystem.Constants.Claw;
+import frc.robot.Constants.Claw;
 
-enum ClawStates {
+public enum ClawStates {
     IDLE("IDLE", 0, false),
     OUTPUTING("OUTPUTING", Claw.OUTPUTTING_SPEED, false),
     INTAKING("INTAKING", Claw.INTAKING_SPEED, false),
