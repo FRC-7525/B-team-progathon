@@ -2,7 +2,7 @@ package frc.robot.subsystem.Wrist;
 
 import frc.robot.Constants;
 
-enum WristStates {
+public enum WristStates {
         HIGH("HIGH", Constants.Wrist.HIGH.magnitude()),
         LOW("LOW", Constants.Wrist.LOW.magnitude()),
         FLAT("FLAT", Constants.Wrist.FLAT.magnitude());
@@ -18,6 +18,7 @@ enum WristStates {
         public String getStateString() {
             return stateString;
         }
+        
 
         public double getTargetAngle() {
             return targetAngle;

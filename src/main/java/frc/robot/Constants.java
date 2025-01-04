@@ -18,6 +18,7 @@ public class Constants {
         public static final double WRIST_P = 1;
         public static final double WRIST_I = 0;
         public static final double WRIST_D = 0;
+    }
       
     public static final class Elevator {
         //Height for each level - meters
@@ -51,5 +52,18 @@ public class Constants {
         //Zeroing
         public static final double ZEROING_SPEED = (0.3); //random value 
         public static final Measure<Current> ZEROING_CURRENT_LIMIT = Amps.of(10);
+    }
+
+    public static final class Claw {
+        public static final int LEFT_PNEUMATICS_ID = 0;
+        public static final int RIGHT_PNEUMATICS_ID = 1;
+
+        public static final int LEFT_MOTOR_ID = 2;
+        public static final int RIGHT_MOTOR_ID = 3;
+
+        // Speeds are not in units, percentage of max power
+        public static final double OUTPUTTING_SPEED = 0.5;
+        public static final double INTAKING_SPEED = -0.5;
+
     }
 }
