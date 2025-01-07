@@ -1,7 +1,6 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
-
 import edu.wpi.first.units.Current;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
@@ -18,6 +17,7 @@ public class Constants {
         public static final double WRIST_P = 1;
         public static final double WRIST_I = 0;
         public static final double WRIST_D = 0;
+    }
       
     public static final class Elevator {
         //Height for each level - meters
@@ -51,5 +51,10 @@ public class Constants {
         //Zeroing
         public static final double ZEROING_SPEED = (0.3); //random value 
         public static final Measure<Current> ZEROING_CURRENT_LIMIT = Amps.of(10);
+
+    }
+    
+    public static final class Drive {
+        public static final double MAX_SPEED_IN_FEET = 4.5;
     }
 }
