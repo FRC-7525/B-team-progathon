@@ -26,7 +26,7 @@ public class Drive {
     public Drive() {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
 
-        maximumSpeed = Units.feetToMeters(Constants.Drive.FEET_TO_METERS);
+        maximumSpeed = Units.feetToMeters(Constants.Drive.MAX_SPEED_IN_FEET);
         swerveJsonDirectory = new File(Filesystem.getDeployDirectory(),"swerve");
         swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed);
         xboxController = new XboxController(0);
@@ -34,31 +34,23 @@ public class Drive {
     }
 
     public void periodic() {
-        getControllerValues();
+        forwardBackward = xboxController.getLeftY();
+        leftRight = xboxController.getLeftX();
+        rotation = xboxController.getRightX();
 
         // Defensive X-Formation if no inputs are detected
-        if (forwardBackward == 0.0 && leftRight == 0.0 && rotation == 0.0) {
+        if (xboxController.getAButtonPressed()) {
             swerveDrive.lockPose();
         } else {
             // Drive normally with input from the Xbox controller
             swerveDrive.drive (new Translation2d(forwardBackward * swerveDrive.getMaximumVelocity(),
                 leftRight * swerveDrive.getMaximumVelocity()),
                 rotation * swerveDrive.getMaximumAngularVelocity(),
-                    false,
+                    true,
                     false);
         }
     }   
 
-    private void getControllerValues() {
-        forwardBackward = xboxController.getLeftY();
-        leftRight = xboxController.getLeftX();
-        rotation = xboxController.getRightX();
-
-        // Deadband Correction
-        forwardBackward = (Math.abs(forwardBackward) < 0.1) ? 0 : forwardBackward;
-        leftRight = (Math.abs(leftRight) < 0.1) ? 0 : leftRight;
-        rotation = (Math.abs(rotation) < 0.1) ? 0 : rotation;
-    }
 
 }
 
