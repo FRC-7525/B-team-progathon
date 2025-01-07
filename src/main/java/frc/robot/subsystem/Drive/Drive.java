@@ -18,6 +18,7 @@ public class Drive {
     private File swerveJsonDirectory;
     private SwerveDrive swerveDrive;
     private XboxController xboxController;
+    private XboxController operatorController;
 
     private double forwardBackward;
     private double leftRight;
@@ -30,6 +31,7 @@ public class Drive {
         swerveJsonDirectory = new File(Filesystem.getDeployDirectory(),"swerve");
         swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed);
         xboxController = new XboxController(0);
+        operatorController = new XboxController(0);
 
     }
 
@@ -39,7 +41,7 @@ public class Drive {
         rotation = xboxController.getRightX();
 
         // Defensive X-Formation if no inputs are detected
-        if (xboxController.getAButtonPressed()) {
+        if (operatorController.getAButtonPressed()) {
             swerveDrive.lockPose();
         } else {
             // Drive normally with input from the Xbox controller
