@@ -75,7 +75,7 @@ public class Elevator {
     }
 
     public void periodic () { 
-        SmartDashboard.putString("State String", state.getStateString());
+        SmartDashboard.putString("ElevatorState", state.getStateString());
         double pidOutput = controller.calculate(getCurrentHeight(), state.getTargetHeight()); 
         if (!motorsZeroed) {
             zero(); 
